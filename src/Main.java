@@ -1,129 +1,132 @@
 import java.util.Scanner;
 public class Main {
+    private static  Scanner scan = new Scanner(System.in);
+    private static final int numeroJogadores = 5;
+    private static  String[][] placar = new String[numeroJogadores][5];
+
+     static {
+         placar[0][0] = "Nome";
+         placar[0][1] = "Pontuação";
+         placar[0][2] = "Moedas Lvl 1";
+         placar[0][3] = "Moedas Lvl 2";
+         placar[0][4] = "Moedas Lvl 3";
+     }
+
     public static void main(String[] args) {
-        Scanner scan = new Scanner(System.in);
 
-        String[][] scoreBoard = new String[5][5];
-        scoreBoard[0][0] = "Nome";
-        scoreBoard[0][1] = "Pontuação";
-        scoreBoard[0][2] = "Moedas Lvl 1";
-        scoreBoard[0][3] = "Moedas Lvl 2";
-        scoreBoard[0][4] = "Moedas Lvl 3";
+        System.out.printf("Olá, bem vindo ao sistema de painel do nosso jogo!\n" +
+                "Primeiramente, preecha o painel:\n");
+        criarPainel();
 
-        System.out.printf("Olá, bem vindo ao painel do nosso jogo!\n");
-
-        boolean loop = true;
-        while (loop) {
+        boolean sistemaLigado = true;
+        while (sistemaLigado) {
             System.out.println(
                     "\nDigite o número de uma operação:\n" +
-                    "1) Preecher painel\n" +
-                    "2) Atualizar pontuação de um determinado jogador\n" +
-                    "3) Mostrar pontuação de um jogador\n" +
-                    "4) Mostrar total de moedas por nivel/jogador \n" +
-                    "5) Mostrar jogador com maior pontuação\n" +
-                    "6) Mostrar painel\n" +
-                    "7) Sair");
-            int escolha = scan.nextInt();
-            int numJogador = 0;
-            switch (escolha) {
+                    "1) Atualizar pontuação de um determinado jogador\n" +
+                    "2) Mostrar pontuação de um jogador\n" +
+                    "3) Mostrar total de moedas por nivel/jogador \n" +
+                    "4) Mostrar jogador com maior pontuação\n" +
+                    "5) Mostrar painel\n" +
+                    "6) Sair");
+            int operacaoEscolhida = scan.nextInt();
+
+            switch (operacaoEscolhida) {
                 case 1 :
-                    for (int i = 1; i < scoreBoard.length; i++) {
-                        int aux = 0;
-
-                        System.out.printf("\nNome %d° jogador: ", i);
-                        scoreBoard[i][0] = scan.next();
-
-                        System.out.print("Moedas Lvl 1:");
-                        scoreBoard[i][2] =scan.next();
-                        aux += Integer.parseInt(scoreBoard[i][2]);
-
-                        System.out.print("Moedas Lvl 2:");
-                        scoreBoard[i][3] =scan.next();
-                        aux += Integer.parseInt(scoreBoard[i][3]);
-
-                        System.out.print("Moedas Lvl 3:");
-                        scoreBoard[i][4] =scan.next();
-                        aux += Integer.parseInt(scoreBoard[i][4]);
-
-                        scoreBoard[i][1] = String.valueOf(aux * 10);
-
-                    }
+                    atualizarPontuacaoJogador();
                     break;
                 case 2 :
-                    if (scoreBoard[1][0] == null) {
-                        System.out.println("Não há jogadores no painel.");
-                        break;
-                    }
-                    System.out.print("Digite o número do jogador que deseja alterar: ");
-                    numJogador = scan.nextInt();
-
-                    if (scoreBoard[numJogador][0] == null) {
-                        System.out.println("Esse jogador não existe.");
-                        break;
-                    }
-
-                    System.out.printf("Pontuação atual é %s. Digite a nova pontuação: ", scoreBoard[numJogador][1]);
-                    scoreBoard[numJogador][1] = String.valueOf(scan.nextInt());
+                    lerPontuacaoJogador();
                     break;
                 case 3 :
-                    if (scoreBoard[1][0] == null) {
-                        System.out.println("Não há jogadores no painel.");
-                        break;
-                    }
-                    System.out.print("Digite o número do jogador que deseja visualizar a pontuação: ");
-                    numJogador = scan.nextInt();
-
-                    if (scoreBoard[numJogador][0] == null) {
-                        System.out.println("Esse jogador não existe.");
-                        break;
-                    }
-
-                    System.out.printf("Pontuação atual é %s\n", scoreBoard[numJogador][1]);
+                    lerMoedasPorNivelEJogador();
                     break;
                 case 4 :
-                    if (scoreBoard[1][0] == null) {
-                        System.out.println("Não há jogadores no painel.");
-                        break;
-                    }
-                    System.out.print("Digite o numero do nivel: ");
-                    int numlvl = scan.nextInt();
-                    for (int i = 0; i < scoreBoard.length ; i++) {
-                        System.out.printf("%-16s",scoreBoard[i][0] );
-                        System.out.printf("%-16s \n",scoreBoard[i][1 + numlvl]);
-                    }
+                    lerJogadorComMaiorPontuacao();
                     break;
                 case 5 :
-                    if (scoreBoard[1][0] == null) {
-                        System.out.println("Não há jogadores no painel.");
-                        break;
-                    }
-                    numJogador = 1;
-                    for (int i = 2; i < scoreBoard.length ; i++) {
-                        if (Integer.parseInt(scoreBoard[i][1]) > Integer.parseInt(scoreBoard[numJogador][1])){
-                            numJogador = i;
-                        }
-                    }
-                    System.out.printf("O jogador %s tem a maior pontuação que é %s\n", scoreBoard[numJogador][0], scoreBoard[numJogador][1]);
+                    lerPainer();
                     break;
                 case 6 :
-                    if (scoreBoard[1][0] == null) {
-                        System.out.println("Não há jogadores no painel.");
-                        break;
-                    }
-                    for (int i = 0; i < scoreBoard.length; i++) {
-                        for (int j = 0; j < scoreBoard[i].length; j++) {
-                            System.out.printf("%-16s", scoreBoard[i][j]);
-                        }
-                        System.out.println();
-                    }
-                    break;
-                case 7 :
-                    loop = false;
+                    sistemaLigado = false;
                     break;
                 default :
                     System.out.println("Operação inválida.");
                     break;
             }
+        }
+        scan.close();
+    }
+    public static void criarPainel() {
+        for (int i = 1; i < placar.length; i++) {
+            int aux = 0;
+
+            System.out.printf("\nNome %d° jogador: ", i);
+            placar[i][0] = scan.next();
+
+            System.out.print("Moedas Lvl 1:");
+            placar[i][2] =scan.next();
+            aux += Integer.parseInt(placar[i][2]);
+
+            System.out.print("Moedas Lvl 2:");
+            placar[i][3] =scan.next();
+            aux += Integer.parseInt(placar[i][3]);
+
+            System.out.print("Moedas Lvl 3:");
+            placar[i][4] =scan.next();
+            aux += Integer.parseInt(placar[i][4]);
+
+            placar[i][1] = String.valueOf(aux * 10);
+        }
+    }
+    public static void atualizarPontuacaoJogador() {
+        System.out.println("Digite o número do jogador que deseja alterar: ");
+        int numJogador = scan.nextInt();
+
+        if (numJogador < 1 || numJogador >= numeroJogadores) {
+            System.out.println("Número de jogador inválido.");
+            return;
+        }
+
+        System.out.printf("Pontuação atual é %s. Digite a nova pontuação: ", placar[numJogador][1]);
+        placar[numJogador][1] = String.valueOf(scan.nextInt());
+    }
+    public static void lerPontuacaoJogador() {
+        System.out.println("Digite o número do jogador que deseja visualizar a pontuação: ");
+        int numJogador = scan.nextInt();
+
+        if (numJogador < 1 || numJogador >= numeroJogadores) {
+            System.out.println("Número de jogador inválido.");
+            return;
+        }
+
+        System.out.printf("Pontuação atual é %s\n", placar[numJogador][1]);
+    }
+    public static void lerMoedasPorNivelEJogador() {
+        System.out.print("Digite o numero do nivel: ");
+        int nivel = scan.nextInt();
+
+        for (int i = 0; i < placar.length ; i++) {
+            System.out.printf("%-16s",placar[i][0] );
+            System.out.printf("%-16s \n",placar[i][1 + nivel]);
+        }
+    }
+    public static void lerJogadorComMaiorPontuacao() {
+        int numJogador = 1;
+        for (int i = 2; i < placar.length ; i++) {
+            if (Integer.parseInt(placar[i][1]) > Integer.parseInt(placar[numJogador][1])){
+                numJogador = i;
+            }
+        }
+        System.out.printf("O jogador %s tem a maior pontuação que é %s\n", placar[numJogador][0], placar[numJogador][1]);
+
+        //TODO: verificar empate
+    }
+    public static void lerPainer() {
+        for (int i = 0; i < placar.length; i++) {
+            for (int j = 0; j < placar[i].length; j++) {
+                System.out.printf("%-16s", placar[i][j]);
+            }
+            System.out.println();
         }
     }
 }
