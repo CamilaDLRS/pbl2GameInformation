@@ -1,0 +1,84 @@
+Index: src/Main.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import java.util.Scanner;\npublic class Main {\n    private static  Scanner scan = new Scanner(System.in);\n    private static final int numeroJogadores = 5;\n    private static  String[][] placar = new String[numeroJogadores][5];\n\n     static {\n         placar[0][0] = \"Nome\";\n         placar[0][1] = \"Pontuação\";\n         placar[0][2] = \"Moedas Lvl 1\";\n         placar[0][3] = \"Moedas Lvl 2\";\n         placar[0][4] = \"Moedas Lvl 3\";\n     }\n\n    public static void main(String[] args) {\n\n        System.out.printf(\"Olá, bem vindo ao sistema de painel do nosso jogo!\\n\" +\n                \"Primeiramente, preecha o painel:\\n\");\n        criarPainel();\n\n        boolean sistemaLigado = true;\n        while (sistemaLigado) {\n            System.out.println(\n                    \"\\nDigite o número de uma operação:\\n\" +\n                    \"1) Atualizar pontuação de um determinado jogador\\n\" +\n                    \"2) Mostrar pontuação de um jogador\\n\" +\n                    \"3) Mostrar total de moedas por nivel/jogador \\n\" +\n                    \"4) Mostrar jogador com maior pontuação\\n\" +\n                    \"5) Mostrar painel\\n\" +\n                    \"6) Sair\");\n            int operacaoEscolhida = scan.nextInt();\n\n            switch (operacaoEscolhida) {\n                case 1 :\n                    atualizarPontuacaoJogador();\n                    break;\n                case 2 :\n                    lerPontuacaoJogador();\n                    break;\n                case 3 :\n                    lerMoedasPorNivelEJogador();\n                    break;\n                case 4 :\n                    lerJogadorComMaiorPontuacao();\n                    break;\n                case 5 :\n                    lerPainer();\n                    break;\n                case 6 :\n                    sistemaLigado = false;\n                    break;\n                default :\n                    System.out.println(\"Operação inválida.\");\n                    break;\n            }\n        }\n        scan.close();\n    }\n    public static void criarPainel() {\n        for (int i = 1; i < placar.length; i++) {\n            int aux = 0;\n\n            System.out.printf(\"\\nNome %d° jogador: \", i);\n            placar[i][0] = scan.next();\n\n            System.out.print(\"Moedas Lvl 1:\");\n            placar[i][2] =scan.next();\n            aux += Integer.parseInt(placar[i][2]);\n\n            System.out.print(\"Moedas Lvl 2:\");\n            placar[i][3] =scan.next();\n            aux += Integer.parseInt(placar[i][3]);\n\n            System.out.print(\"Moedas Lvl 3:\");\n            placar[i][4] =scan.next();\n            aux += Integer.parseInt(placar[i][4]);\n\n            placar[i][1] = String.valueOf(aux * 10);\n        }\n    }\n    public static void atualizarPontuacaoJogador() {\n        System.out.println(\"Digite o número do jogador que deseja alterar: \");\n        int numJogador = scan.nextInt();\n\n        if (numJogador < 1 || numJogador >= numeroJogadores) {\n            System.out.println(\"Número de jogador inválido.\");\n            return;\n        }\n\n        System.out.printf(\"Pontuação atual é %s. Digite a nova pontuação: \", placar[numJogador][1]);\n        placar[numJogador][1] = String.valueOf(scan.nextInt());\n    }\n    public static void lerPontuacaoJogador() {\n        System.out.println(\"Digite o número do jogador que deseja visualizar a pontuação: \");\n        int numJogador = scan.nextInt();\n\n        if (numJogador < 1 || numJogador >= numeroJogadores) {\n            System.out.println(\"Número de jogador inválido.\");\n            return;\n        }\n\n        System.out.printf(\"Pontuação atual é %s\\n\", placar[numJogador][1]);\n    }\n    public static void lerMoedasPorNivelEJogador() {\n        System.out.print(\"Digite o numero do nivel: \");\n        int nivel = scan.nextInt();\n\n        for (int i = 0; i < placar.length ; i++) {\n            System.out.printf(\"%-16s\",placar[i][0] );\n            System.out.printf(\"%-16s \\n\",placar[i][1 + nivel]);\n        }\n    }\n    public static void lerJogadorComMaiorPontuacao() {\n        int numJogador = 1;\n        for (int i = 2; i < placar.length ; i++) {\n            if (Integer.parseInt(placar[i][1]) > Integer.parseInt(placar[numJogador][1])){\n                numJogador = i;\n            }\n        }\n        System.out.printf(\"O jogador %s tem a maior pontuação que é %s\\n\", placar[numJogador][0], placar[numJogador][1]);\n\n        //TODO: verificar empate\n    }\n    public static void lerPainer() {\n        for (int i = 0; i < placar.length; i++) {\n            for (int j = 0; j < placar[i].length; j++) {\n                System.out.printf(\"%-16s\", placar[i][j]);\n            }\n            System.out.println();\n        }\n    }\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/Main.java b/src/Main.java
+--- a/src/Main.java	
++++ b/src/Main.java	
+@@ -112,6 +112,7 @@
+     }
+     public static void lerJogadorComMaiorPontuacao() {
+         int numJogador = 1;
++
+         for (int i = 2; i < placar.length ; i++) {
+             if (Integer.parseInt(placar[i][1]) > Integer.parseInt(placar[numJogador][1])){
+                 numJogador = i;
+Index: .idea/workspace.xml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<project version=\"4\">\n  <component name=\"AutoImportSettings\">\n    <option name=\"autoReloadType\" value=\"SELECTIVE\" />\n  </component>\n  <component name=\"ChangeListManager\">\n    <list default=\"true\" id=\"b431d1d5-a23d-4290-952b-bb1921d23820\" name=\"Changes\" comment=\"first commit\">\n      <change beforePath=\"$PROJECT_DIR$/.idea/workspace.xml\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/.idea/workspace.xml\" afterDir=\"false\" />\n      <change beforePath=\"$PROJECT_DIR$/src/Main.java\" beforeDir=\"false\" afterPath=\"$PROJECT_DIR$/src/Main.java\" afterDir=\"false\" />\n    </list>\n    <option name=\"SHOW_DIALOG\" value=\"false\" />\n    <option name=\"HIGHLIGHT_CONFLICTS\" value=\"true\" />\n    <option name=\"HIGHLIGHT_NON_ACTIVE_CHANGELIST\" value=\"false\" />\n    <option name=\"LAST_RESOLUTION\" value=\"IGNORE\" />\n  </component>\n  <component name=\"Git.Settings\">\n    <option name=\"RECENT_GIT_ROOT_PATH\" value=\"$PROJECT_DIR$\" />\n  </component>\n  <component name=\"GitHubPullRequestSearchHistory\">{\n  &quot;lastFilter&quot;: {\n    &quot;state&quot;: &quot;OPEN&quot;,\n    &quot;assignee&quot;: &quot;CamilaDLRS&quot;\n  }\n}</component>\n  <component name=\"GithubPullRequestsUISettings\">\n    <option name=\"selectedUrlAndAccountId\">\n      <UrlAndAccount>\n        <option name=\"accountId\" value=\"3dd4d6d2-bbf6-4080-8424-539cc35bce59\" />\n        <option name=\"url\" value=\"https://github.com/CamilaDLRS/pbl2GameInformation.git\" />\n      </UrlAndAccount>\n    </option>\n  </component>\n  <component name=\"ProjectColorInfo\">{\n  &quot;associatedIndex&quot;: 6\n}</component>\n  <component name=\"ProjectId\" id=\"2d6VzqWypoGN4lWus4RkyzwJWsm\" />\n  <component name=\"ProjectLevelVcsManager\" settingsEditedManually=\"true\" />\n  <component name=\"ProjectViewState\">\n    <option name=\"hideEmptyMiddlePackages\" value=\"true\" />\n    <option name=\"showLibraryContents\" value=\"true\" />\n  </component>\n  <component name=\"PropertiesComponent\">{\n  &quot;keyToString&quot;: {\n    &quot;Application.Main.executor&quot;: &quot;Run&quot;,\n    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,\n    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,\n    &quot;git-widget-placeholder&quot;: &quot;main&quot;,\n    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,\n    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/M60158/IdeaProjects/pbl2GameInformation/src/Main.java&quot;\n  }\n}</component>\n  <component name=\"SpellCheckerSettings\" RuntimeDictionaries=\"0\" Folders=\"0\" CustomDictionaries=\"0\" DefaultDictionary=\"application-level\" UseSingleDictionary=\"true\" transferred=\"true\" />\n  <component name=\"TaskManager\">\n    <task active=\"true\" id=\"Default\" summary=\"Default task\">\n      <changelist id=\"b431d1d5-a23d-4290-952b-bb1921d23820\" name=\"Changes\" comment=\"\" />\n      <created>1709328785227</created>\n      <option name=\"number\" value=\"Default\" />\n      <option name=\"presentableId\" value=\"Default\" />\n      <updated>1709328785227</updated>\n    </task>\n    <task id=\"LOCAL-00001\" summary=\"first commit\">\n      <option name=\"closed\" value=\"true\" />\n      <created>1709329042075</created>\n      <option name=\"number\" value=\"00001\" />\n      <option name=\"presentableId\" value=\"LOCAL-00001\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1709329042075</updated>\n    </task>\n    <task id=\"LOCAL-00002\" summary=\"first commit\">\n      <option name=\"closed\" value=\"true\" />\n      <created>1709340081129</created>\n      <option name=\"number\" value=\"00002\" />\n      <option name=\"presentableId\" value=\"LOCAL-00002\" />\n      <option name=\"project\" value=\"LOCAL\" />\n      <updated>1709340081130</updated>\n    </task>\n    <option name=\"localTasksCounter\" value=\"3\" />\n    <servers />\n  </component>\n  <component name=\"VcsManagerConfiguration\">\n    <MESSAGE value=\"first commit\" />\n    <option name=\"LAST_COMMIT_MESSAGE\" value=\"first commit\" />\n  </component>\n</project>
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.idea/workspace.xml b/.idea/workspace.xml
+--- a/.idea/workspace.xml	
++++ b/.idea/workspace.xml	
+@@ -4,10 +4,7 @@
+     <option name="autoReloadType" value="SELECTIVE" />
+   </component>
+   <component name="ChangeListManager">
+-    <list default="true" id="b431d1d5-a23d-4290-952b-bb1921d23820" name="Changes" comment="first commit">
+-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+-    </list>
++    <list default="true" id="b431d1d5-a23d-4290-952b-bb1921d23820" name="Changes" comment="first commit" />
+     <option name="SHOW_DIALOG" value="false" />
+     <option name="HIGHLIGHT_CONFLICTS" value="true" />
+     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+@@ -29,6 +26,9 @@
+         <option name="url" value="https://github.com/CamilaDLRS/pbl2GameInformation.git" />
+       </UrlAndAccount>
+     </option>
++  </component>
++  <component name="MarkdownSettingsMigration">
++    <option name="stateVersion" value="1" />
+   </component>
+   <component name="ProjectColorInfo">{
+   &quot;associatedIndex&quot;: 6
+@@ -39,16 +39,24 @@
+     <option name="hideEmptyMiddlePackages" value="true" />
+     <option name="showLibraryContents" value="true" />
+   </component>
+-  <component name="PropertiesComponent">{
+-  &quot;keyToString&quot;: {
+-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
+-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+-    &quot;onboarding.tips.debug.path&quot;: &quot;C:/Users/M60158/IdeaProjects/pbl2GameInformation/src/Main.java&quot;
++  <component name="PropertiesComponent"><![CDATA[{
++  "keyToString": {
++    "Application.Main.executor": "Run",
++    "RunOnceActivity.OpenProjectViewOnStart": "true",
++    "RunOnceActivity.ShowReadmeOnStart": "true",
++    "git-widget-placeholder": "dev",
++    "kotlin-language-version-configured": "true",
++    "last_opened_file_path": "/home/Dimitri/Documents/pbl2GameInformation",
++    "onboarding.tips.debug.path": "C:/Users/M60158/IdeaProjects/pbl2GameInformation/src/Main.java"
+   }
+-}</component>
++}]]></component>
++  <component name="SharedIndexes">
++    <attachedChunks>
++      <set>
++        <option value="jdk-21.0.2-openjdk-21.0.2-4caba194b151-78a6f59c" />
++      </set>
++    </attachedChunks>
++  </component>
+   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+   <component name="TaskManager">
+     <task active="true" id="Default" summary="Default task">

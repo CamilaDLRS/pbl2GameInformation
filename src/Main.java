@@ -1,3 +1,5 @@
+import java.awt.*;
+import java.util.ArrayList;
 import java.util.Scanner;
 public class Main {
     private static  Scanner scan = new Scanner(System.in);
@@ -44,7 +46,7 @@ public class Main {
                     lerJogadorComMaiorPontuacao();
                     break;
                 case 5 :
-                    lerPainer();
+                    lerPainel();
                     break;
                 case 6 :
                     sistemaLigado = false;
@@ -112,16 +114,36 @@ public class Main {
     }
     public static void lerJogadorComMaiorPontuacao() {
         int numJogador = 1;
+        boolean empate = false;
+        int[] numJogadoresEmpate = new int[4];
+
         for (int i = 2; i < placar.length ; i++) {
+            if (Integer.parseInt(placar[i][1]) == Integer.parseInt(placar[numJogador][1])) {
+                if (!empate) {
+                    numJogadoresEmpate[0] = numJogador;
+                }
+                numJogadoresEmpate[i - 1] = i;
+                empate = true;
+            }
             if (Integer.parseInt(placar[i][1]) > Integer.parseInt(placar[numJogador][1])){
                 numJogador = i;
+                empate = false;
+                numJogadoresEmpate = new int[4];
             }
         }
-        System.out.printf("O jogador %s tem a maior pontuação que é %s\n", placar[numJogador][0], placar[numJogador][1]);
-
-        //TODO: verificar empate
+        if (empate) {
+            System.out.print("Empate entre jogadores: ");
+            for (int i = 0; i < numJogadoresEmpate.length; i++) {
+                if (numJogadoresEmpate[i] != 0) {
+                    System.out.print(placar[numJogadoresEmpate[i]][0] + " ");
+                }
+            }
+            System.out.printf("com %s pontos\n", placar[numJogador][1]);
+        } else {
+            System.out.printf("O jogador %s tem a maior pontuação que é %s\n", placar[numJogador][0], placar[numJogador][1]);
+        }
     }
-    public static void lerPainer() {
+    public static void lerPainel() {
         for (int i = 0; i < placar.length; i++) {
             for (int j = 0; j < placar[i].length; j++) {
                 System.out.printf("%-16s", placar[i][j]);
